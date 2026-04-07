@@ -86,6 +86,20 @@ class AuthApiTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function test_books_endpoint_without_token_returns_unauthorized_for_plain_request(): void
+    {
+        Book::create([
+            'title' => 'Belajar Laravel',
+            'author' => 'Akbar',
+            'publisher' => 'Informatika',
+            'year' => 2026,
+        ]);
+
+        $response = $this->get('/api/books');
+
+        $response->assertUnauthorized();
+    }
+
     public function test_authenticated_user_can_access_profile_and_books(): void
     {
         $user = User::create([
